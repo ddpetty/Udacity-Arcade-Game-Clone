@@ -1,5 +1,5 @@
 let gameScore = 0;
-//Relevant score div
+let lives = 3;
 
 // Enemies our player must avoid
 class Enemy {
@@ -25,11 +25,12 @@ class Enemy {
 		// Restarts enemy movement from the left when Player reaches the water
 		if (this.x > 505) {
 			this.x = -150;
-			//Controls the enemy movement speed 
+			//Controls the enemy movement speed
 			//New Feature (levels): *400-600 easy *700+ for hard
-			this.movement = 150 + Math.floor(Math.random() * 504);
+			this.movement = 150 + Math.floor(Math.random() * 800);
 
 		}
+
 		// Checks collisons and restarts player at the bottom
 		if (player.x < this.x + 60 &&
 			player.x + 37 > this.x &&
@@ -37,6 +38,14 @@ class Enemy {
 			30 + player.y > this.y) {
 			player.x = 200;
 			player.y = 400;
+			lives--;
+			console.log(`You have ${lives} lives left.`);
+			if(lives === 0) {
+				//Will replace with modal
+				confirm(`Game Over! Do you want to play again?`);
+				lives = 3;
+				gameScore = 0;
+			}
 		}
 	};
 	// Draw the enemy on the screen, required method for game
@@ -65,15 +74,19 @@ class Player {
 		if (this.x < 0) {
 			this.x = 0;
 		}
-		// Once player reaches the water. 100 points will be added to their game score
+		// Once player reaches the water, 100 points will be added to their game score
 		if (this.y < 0) {
 			this.x = 200;
 			this.y = 380;
 			gameScore++;
 			console.log(gameScore * 100);
+			if (gameScore === 5 && lives > 0) {
+				console.log(`You won the Game!`);
+				lives = 3;
+				gameScore = 0;
+			}
 		}
 	}
-
 	render() {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
@@ -101,7 +114,7 @@ let allEnemies = [];
 let enemyPosition = [50, 135, 220];
 let player = new Player(200, 400, 50);
 
-
+//Creates array of enemy objects
 enemyPosition.forEach((enemyPositionCoordinate) => {
 	let enemy = new Enemy(0, enemyPositionCoordinate, 100 + Math.floor(Math.random() * 500));
 	allEnemies.push(enemy);
