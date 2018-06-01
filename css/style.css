@@ -1,3 +1,13 @@
 body {
-    text-align: center;
+	text-align: center;
+}
+
+/* Score and Lives */
+
+.game-stats {
+	margin: 3rem auto 0 auto;
+	width: 30%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }

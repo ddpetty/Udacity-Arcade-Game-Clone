@@ -1,5 +1,7 @@
-let gameScore = 0;
-let lives = 3;
+let gameScore = 0,
+	lives = 3,
+	livesLeft = document.querySelector('.lives > span'),
+	score = document.querySelector('.score > span');
 
 // Enemies our player must avoid
 class Enemy {
@@ -21,6 +23,7 @@ class Enemy {
 		// which will ensure the game runs at the same speed for
 		// all computers.
 		this.x += this.movement * dt;
+		livesLeft.innerText = lives;
 
 		// Restarts enemy movement from the left when Player reaches the water
 		if (this.x > 505) {
@@ -39,12 +42,14 @@ class Enemy {
 			player.x = 200;
 			player.y = 400;
 			lives--;
-			console.log(`You have ${lives} lives left.`);
-			if(lives === 0) {
+			livesLeft.innerText = lives;
+			if (lives === 0) {
 				//Will replace with modal
 				confirm(`Game Over! Do you want to play again?`);
 				lives = 3;
 				gameScore = 0;
+				livesLeft.innerText = lives;
+				score.innerText = '';
 			}
 		}
 	};
@@ -79,11 +84,13 @@ class Player {
 			this.x = 200;
 			this.y = 380;
 			gameScore++;
-			console.log(gameScore * 100);
-			if (gameScore === 5 && lives > 0) {
-				console.log(`You won the Game!`);
+			score.innerText = gameScore * 100;
+			if (gameScore === 10 && lives > 0) {
+				confirm('You won the game!');
 				lives = 3;
 				gameScore = 0;
+				livesLeft.innerText = lives;
+				score.innerText = '';
 			}
 		}
 	}
