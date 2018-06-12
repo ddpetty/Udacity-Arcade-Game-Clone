@@ -5,7 +5,7 @@
 
  ## Live Demo
 
-Link coming soon!
+https://ddpetty.github.io/Udacity-Arcade-Game-Clone/
 
  ## Languages or Tools used
 
